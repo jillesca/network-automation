@@ -1,5 +1,3 @@
-# https://learn.microsoft.com/en-us/azure/developer/ansible/configure-in-docker-container?tabs=azure-cli
-
 FROM python:alpine3.16
 
 COPY . .

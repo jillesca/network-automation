@@ -8,7 +8,7 @@ On this repo, you will find examples for:
 - use ansible as a container
 - use ansible as part of a pipeline
 
-# Build and Use ansible on a container
+## Build and use ansible on a Container
 
 build docker image from root dir
 
