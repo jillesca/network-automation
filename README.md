@@ -1,4 +1,4 @@
-# network-automation
+# Network Automation
 
 Some network automation codes, pipelines that I'm planning to add over time
 
@@ -8,7 +8,7 @@ On this repo, you will find examples for:
 - use ansible as a container
 - use ansible as part of a pipeline
 
-## Build and use ansible on a Container
+## Build and use Ansible on a Container
 
 build docker image from root dir
 
@@ -43,3 +43,11 @@ ansible [core 2.13.5]
   libyaml = False
 / #
 ```
+
+## Reserve a lab (optional)
+
+If you want to follow the example, you can reserve a DevNet Sandbox, which is free.
+
+For this guide I used [Cisco Modeling Labs Enterprise](https://developer.cisco.com/docs/sandbox/#!networking/networking-overview)
+
+Follow the instructions about reserving the lab.
