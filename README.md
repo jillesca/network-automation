@@ -1,6 +1,14 @@
 # Network Automation
 
-Some network automation codes, pipelines that I'm planning to add over time
+- [Network Automation](#network-automation)
+  - [Intro](#intro)
+  - [Build and use Ansible on a Container](#build-and-use-ansible-on-a-container)
+  - [Reserve a lab (optional)](#reserve-a-lab-optional)
+  - [Github Runner](#github-runner)
+
+## Intro
+
+I'm using this repo to practice some network automation codes, pipelines. As time passes I'm planning to add more functions/examples over time.
 
 On this repo, you will find examples for:
 
@@ -46,8 +54,19 @@ ansible [core 2.13.5]
 
 ## Reserve a lab (optional)
 
-If you want to follow the example, you can reserve a DevNet Sandbox, which is free.
+If you don't have network devices available, and you want to follow the example, you can reserve a `Cisco DevNet Sandbox`, which is free.
 
 For this guide I used [Cisco Modeling Labs Enterprise](https://developer.cisco.com/docs/sandbox/#!networking/networking-overview)
 
 Follow the instructions about reserving the lab.
+
+## Github Runner
+
+For the pipeline, I'm using `Github Actions`, therefore the instructions on the repo are specific for Github, however you can replicate the concepts on other CI/CD tools.
+
+I'm using a self-hosted runner, so my pipeline can reach and configure the network devices inside a VPN. for this guide the runner is configured in my laptop.
+
+To add a runner go to:
+`Settings > Actions > Runners` and click on `New self-hosted runner`. From there chose your OS and follow the instructions.
+
+Once the runner is added, you can see its status on the runner tab.
