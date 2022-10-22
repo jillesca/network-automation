@@ -20,7 +20,8 @@ services:
 # otherwise the image has to be built everytime we do changes.
 # For a pipeline, this docker-compose is not needed
 
-# To use from ROOT dir
+# Must be executed from ROOT dir
+# otherwise volumes dir must be updated
 # docker-compose -f ./docker/ansible.docker-compose.yml up -d
 
 # To enter the contaienr afte it runs
