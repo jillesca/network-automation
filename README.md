@@ -16,6 +16,8 @@ On this repo, you will find examples for:
 - use ansible as a container
 - use ansible as part of a pipeline
 
+> All commands added on the repo are assumming are being executed from the `ROOT` directory of the project, if you are not on the root directory, you need to update the paths if the commands are using it.
+
 ## Build and use Ansible on a Container
 
 build docker image from root dir. Tag name is optional, but must be referenced when use `docker run`.

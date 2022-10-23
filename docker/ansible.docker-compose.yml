@@ -1,7 +1,7 @@
 version: "3.8"
 
 services:
-  php:
+  ansible:
     image: jillesca/ansible:version1.0
     container_name: ansible
     tty: true
