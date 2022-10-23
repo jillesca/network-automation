@@ -8,7 +8,7 @@ WORKDIR home
 FROM base AS prod
 COPY ./ansible .
 
-# If you don't want install all the base dependecies
+# If you don't want to build the base image
 # you can use this image that is ready  
 FROM jillesca/ansible:version1.0 as built
 COPY ./ansible .

@@ -1,4 +1,8 @@
+# https://docs.ansible.com/ansible/latest/network/getting_started/first_inventory.html
 ---
 dist:
-  - 10.10.20.176
-  - 10.10.20.175
+  hosts:
+    dist-rtr01:
+      ansible_host: 10.10.20.176
+    dist-rtr02:
+      ansible_host: 10.10.20.175
