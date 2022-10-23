@@ -1,4 +1,8 @@
+# How to define an inventory
 # https://docs.ansible.com/ansible/latest/network/getting_started/first_inventory.html
+
+# Hosts used here are from `Cisco DevNet Sandbox`. See root README for more info.
+# if you are using your own devices, replace the host/IP and update ansible/group_vars/all.yml
 ---
 dist:
   hosts:
