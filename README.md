@@ -18,7 +18,7 @@ On this repo, you will find examples for:
 
 ## Build and use Ansible on a Container
 
-build docker image from root dir. Tag name is optional, but must be referenced when usd `docker run`.
+build docker image from root dir. Tag name is optional, but must be referenced when use `docker run`.
 
 ```bash
 # Build
