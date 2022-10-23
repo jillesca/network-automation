@@ -18,27 +18,19 @@ On this repo, you will find examples for:
 
 ## Build and use Ansible on a Container
 
-build docker image from root dir
+build docker image from root dir. Tag name is optional, but must be referenced when use `docker run`.
 
 ```bash
+# Build
 docker build --file ansible-dockerfile/base-ansible.dockerfile --tag jillesca/ansible:version1.0 .
-```
 
-run container standalone
+# run container standalone
+docker run -dt --name ansible jillesca/ansible:version1.0
 
-```bash
-docker run -dt --name ansible jillesca/ansible:version1.0 /bin/sh
-```
-
-log into the container
-
-```bash
+# log into the container
 docker exec -it ansible /bin/sh
-```
 
-from there you can verify the ansible installation
-
-```bash
+# Verify the ansible installation
 / # ansible --version
 ansible [core 2.13.5]
   config file = None
@@ -50,6 +42,20 @@ ansible [core 2.13.5]
   jinja version = 3.1.2
   libyaml = False
 / #
+```
+
+For an easier way to develop with the container, use docker-compose. This way, changes on your local project will be reflected on the container.
+
+```bash
+# Bring container
+docker-compose -f ./docker/ansible.docker-compose.yml up -d
+
+# log into the container
+docker exec -it ansible /bin/sh
+
+# Two ways to bring down the container, prefer first option
+docker-compose -f ./docker/ansible.docker-compose.yml down
+docker rm -f ansible
 ```
 
 ## Reserve a lab (optional)

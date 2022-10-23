@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  php:
+    image: jillesca/ansible:version1.0
+    container_name: ansible
+    tty: true
+    # If you want to build your own image
+    # uncomment the lines below build
+    # and add use the --build option along
+    # build:
+    #   context: ../
+    #   target: base
+    #   dockerfile: ./docker/ansible/base-ansible.dockerfile
+    volumes:
+      - ./../ansible:/home
+      #
+# For development is easiest to do changes on code locally
+# and use a volume to run the changes on the containers directly
+# otherwise the image has to be built everytime we do changes.
+# For a pipeline, this docker-compose is not needed
+
+# Must be executed from ROOT dir
+# otherwise volumes dir must be updated
+# docker-compose -f ./docker/ansible.docker-compose.yml up -d
+
+# To enter the contaienr afte it runs
+# docker exec -it ansible /bin/sh
