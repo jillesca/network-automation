@@ -13,6 +13,14 @@ COPY ./ansible .
 FROM jillesca/ansible:version1.0 as built
 COPY ./ansible .
 
+# Build a version to work with Cisco Modeling Labs or VIRL 
+# The virl2_client version is linked to the controller version.
+# If the vesion of your CML is different, this will have to be updated.
+# https://github.com/CiscoDevNet/virl2-client/issues/20#issuecomment-1181432957
+FROM jillesca/ansible:version1.0 as cml
+RUN pip install virl2-client==2.2.1.post2 \
+    && ansible-galaxy collection install cisco.cml
+
 # build base image from ROOT dir
 # docker build --target base --file docker/ansible/base-ansible.dockerfile --tag jillesca/ansible:version1.0 .
 

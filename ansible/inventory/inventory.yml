@@ -10,3 +10,8 @@ dist:
       ansible_host: 10.10.20.176
     dist-rtr02:
       ansible_host: 10.10.20.175
+
+lab:
+  hosts:
+    cml:
+      ansible_host: 10.10.20.161
