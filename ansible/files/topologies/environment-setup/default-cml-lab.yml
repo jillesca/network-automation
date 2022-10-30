@@ -4,7 +4,7 @@ lab:
     Linux hosts.
   notes: ""
   timestamp: 1627404544.8759394
-  title: Small NXOS/IOSXE Network
+  title: jillesca NXOS/IOSXE Network
   version: 0.0.4
 nodes:
   - id: n5
