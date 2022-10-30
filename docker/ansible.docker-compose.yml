@@ -8,7 +8,7 @@ services:
     volumes:
       - ./../ansible:/home
     environment:
-      CML_USER: ${CML_USER}
+      CML_USERNAME: ${CML_USERNAME}
       CML_PASSWORD: ${CML_PASSWORD}
       CML_HOST: ${CML_HOST}
       CML_LAB: ${CML_LAB}

@@ -19,10 +19,12 @@
       cisco.cml.cml_lab_facts:
         lab: "{{ cml_lab }}"
         host: "{{ cml_host }}"
-        user: "{{ cml_user }}"
+        user: "{{ cml_username }}"
         password: "{{ cml_password }}"
         validate_certs: "{{ cml_validate_certs }}"
       register: output
+      tags:
+        - facts
 
     # # For debugging purposes
     # - debug:
