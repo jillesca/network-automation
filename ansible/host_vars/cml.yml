@@ -1,0 +1,6 @@
+---
+cml_lab: "{{ lookup('env', 'CML_LAB') }}"
+cml_host: "{{ lookup('env', 'CML_HOST') }}"
+cml_user: "{{ lookup('env', 'CML_USERNAME') }}"
+cml_password: "{{ lookup('env', 'CML_PASSWORD') }}"
+cml_validate_certs: "{{ lookup('env', 'CML_VERIFY_CERT') }}"

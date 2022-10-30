@@ -1,0 +1,33 @@
+---
+# ansible-playbook cisco_cml_facts.yml -vvv
+# the lab variable refers to the lab TITLE, not ID.
+# the title could be something as "Small NXOS/IOSXE Network"
+# You can also SSH to CML, then enter "labs" to get the title
+# consoles> labs
+# Lab ID                    Lab Title             Created  Nodes  Links Notes
+# -------------------------------------------------------------------------------
+# b4bb2d     Small NXOS/IOSXE Network 2021-07-27 12:49:04      8     16 A sample network built with IOS XE, NX-OS, IOS XR, and ASA devices.  Includes Linux hosts.
+# consoles>
+
+- name: Check Topology connectivity
+  hosts: cml
+  connection: network_cli
+  gather_facts: no
+
+  tasks:
+    - name: Collect facts about CML lab
+      cisco.cml.cml_lab_facts:
+        lab: "{{ cml_lab }}"
+        host: "{{ cml_host }}"
+        user: "{{ cml_user }}"
+        password: "{{ cml_password }}"
+        validate_certs: "{{ cml_validate_certs }}"
+      register: output
+
+    # # For debugging purposes
+    # - debug:
+    #     var: output
+
+    # - copy:
+    #     dest: /home/lab_facts.json
+    #     content: "{{ output }}"
