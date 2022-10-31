@@ -14,8 +14,11 @@ FROM jillesca/ansible:version1.0 as built
 COPY ./ansible .
 
 # Build a version to work with Cisco Modeling Labs or VIRL 
-# The virl2_client version is linked to the controller version.
-# If the vesion of your CML is different, this will have to be updated.
+# virl2_client lib is linked to the controller version.
+# virl version used was 2.2.2+build52
+# If your virl version is different, this must be updated.
+# Check your version with curl or open the API on your browser.
+# curl https://{CML_IP}/api/v0/system_information -k
 # https://github.com/CiscoDevNet/virl2-client/issues/20#issuecomment-1181432957
 FROM jillesca/ansible:version1.0 as cml
 RUN pip install virl2-client==2.2.1.post2 \
