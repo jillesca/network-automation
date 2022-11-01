@@ -6,7 +6,7 @@ lab:
   version: 0.0.4
 nodes:
   - id: n0
-    label: ext-conn-0
+    label: bridge-to-sandbox
     node_definition: external_connector
     x: -650
     y: -250
@@ -18,7 +18,7 @@ nodes:
         label: port
         type: physical
   - id: n1
-    label: oob-mgmt
+    label: sandbox-backend
     node_definition: unmanaged_switch
     x: -750
     y: -200
@@ -76,14 +76,6 @@ nodes:
     y: -50
     configuration: |-
       hostname spine1
-      vrf definition Mgmt-intf
-      !
-      address-family ipv4
-      exit-address-family
-      !
-      address-family ipv6
-      exit-address-family
-      !
       enable password cisco
       no ip domain lookup
       ip domain name virl.info
@@ -91,14 +83,32 @@ nodes:
       !
       interface GigabitEthernet1
       description to sandbox-backend
-      vrf forwarding Mgmt-intf
       ip address 10.10.20.11 255.255.255.0
       negotiation auto
       no mop enabled
       no mop sysid
       no shutdown
       !
-      ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 10.10.20.254
+      ip route 0.0.0.0 0.0.0.0 10.10.20.254
+      !
+      ! https://ghostinthenet.info/generate-ssh-keys-on-startup/
+      event manager applet ping-gateway_and_EEM_SSH_Keygen
+      event timer cron cron-entry "@reboot"
+      action 0.0 info type routername
+      action 0.1 set status "none"
+      action 1.0 cli command "enable"
+      action 2.0 syslog msg  "Start pinging Gateway"
+      action 2.2 cli command "ping 10.10.20.254 repeat 100"
+      action 2.3 syslog msg  "Finishing pinging Gateway"
+      action 3.0 cli command "show ip ssh | include ^SSH"
+      action 3.1 regexp "([ED][^ ]+)" "$_cli_result" result status
+      action 4.0 if $status eq Disabled
+      action 4.1  syslog msg  "Generating SSH keys"
+      action 4.2  cli command "configure terminal"
+      action 4.3  cli command "crypto key generate rsa modulus 2048 label $_info_routername"
+      action 4.4  cli command "end"
+      action 4.5  syslog msg  "End generating SSH keys"
+      action 4.6 end
       !
       line con 0
       exec-timeout 0 0
@@ -144,14 +154,6 @@ nodes:
     y: 50
     configuration: |-
       hostname spine2
-      vrf definition Mgmt-intf
-      !
-      address-family ipv4
-      exit-address-family
-      !
-      address-family ipv6
-      exit-address-family
-      !
       enable password cisco
       no ip domain lookup
       ip domain name virl.info
@@ -159,15 +161,32 @@ nodes:
       !
       interface GigabitEthernet1
       description to sandbox-backend
-      vrf forwarding Mgmt-intf
       ip address 10.10.20.12 255.255.255.0
       negotiation auto
       no mop enabled
       no mop sysid
       no shutdown
       !
-      ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 10.10.20.254
+      ip route 0.0.0.0 0.0.0.0 10.10.20.254
       !
+      ! https://ghostinthenet.info/generate-ssh-keys-on-startup/
+      event manager applet ping-gateway_and_EEM_SSH_Keygen
+      event timer cron cron-entry "@reboot"
+      action 0.0 info type routername
+      action 0.1 set status "none"
+      action 1.0 cli command "enable"
+      action 2.0 syslog msg  "Start pinging Gateway"
+      action 2.2 cli command "ping 10.10.20.254 repeat 100"
+      action 2.3 syslog msg  "Finishing pinging Gateway"
+      action 3.0 cli command "show ip ssh | include ^SSH"
+      action 3.1 regexp "([ED][^ ]+)" "$_cli_result" result status
+      action 4.0 if $status eq Disabled
+      action 4.1  syslog msg  "Generating SSH keys"
+      action 4.2  cli command "configure terminal"
+      action 4.3  cli command "crypto key generate rsa modulus 2048 label $_info_routername"
+      action 4.4  cli command "end"
+      action 4.5  syslog msg  "End generating SSH keys"
+      action 4.6 end
       line con 0
       exec-timeout 0 0
       password cisco
@@ -212,14 +231,6 @@ nodes:
     y: -150
     configuration: |-
       hostname leaf1
-      vrf definition Mgmt-intf
-      !
-      address-family ipv4
-      exit-address-family
-      !
-      address-family ipv6
-      exit-address-family
-      !
       enable password cisco
       no ip domain lookup
       ip domain name virl.info
@@ -234,7 +245,26 @@ nodes:
       no mop sysid
       no shutdown
       !
-      ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 10.10.20.254
+      ip route 0.0.0.0 0.0.0.0 10.10.20.254
+      !
+      ! https://ghostinthenet.info/generate-ssh-keys-on-startup/
+      event manager applet ping-gateway_and_EEM_SSH_Keygen
+      event timer cron cron-entry "@reboot"
+      action 0.0 info type routername
+      action 0.1 set status "none"
+      action 1.0 cli command "enable"
+      action 2.0 syslog msg  "Start pinging Gateway"
+      action 2.2 cli command "ping 10.10.20.254 repeat 100"
+      action 2.3 syslog msg  "Finishing pinging Gateway"
+      action 3.0 cli command "show ip ssh | include ^SSH"
+      action 3.1 regexp "([ED][^ ]+)" "$_cli_result" result status
+      action 4.0 if $status eq Disabled
+      action 4.1  syslog msg  "Generating SSH keys"
+      action 4.2  cli command "configure terminal"
+      action 4.3  cli command "crypto key generate rsa modulus 2048 label $_info_routername"
+      action 4.4  cli command "end"
+      action 4.5  syslog msg  "End generating SSH keys"
+      action 4.6 end
       !
       line con 0
       exec-timeout 0 0
@@ -276,14 +306,6 @@ nodes:
     y: 0
     configuration: |-
       hostname leaf2
-      vrf definition Mgmt-intf
-      !
-      address-family ipv4
-      exit-address-family
-      !
-      address-family ipv6
-      exit-address-family
-      !
       enable password cisco
       no ip domain lookup
       ip domain name virl.info
@@ -291,14 +313,32 @@ nodes:
       !
       interface GigabitEthernet1
       description to sandbox-backend
-      vrf forwarding Mgmt-intf
       ip address 10.10.20.22 255.255.255.0
       negotiation auto
       no mop enabled
       no mop sysid
       no shutdown
       !
-      ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 10.10.20.254
+      ip route 0.0.0.0 0.0.0.0 10.10.20.254
+      !
+      ! https://ghostinthenet.info/generate-ssh-keys-on-startup/
+      event manager applet ping-gateway_and_EEM_SSH_Keygen
+      event timer cron cron-entry "@reboot"
+      action 0.0 info type routername
+      action 0.1 set status "none"
+      action 1.0 cli command "enable"
+      action 2.0 syslog msg  "Start pinging Gateway"
+      action 2.2 cli command "ping 10.10.20.254 repeat 100"
+      action 2.3 syslog msg  "Finishing pinging Gateway"
+      action 3.0 cli command "show ip ssh | include ^SSH"
+      action 3.1 regexp "([ED][^ ]+)" "$_cli_result" result status
+      action 4.0 if $status eq Disabled
+      action 4.1  syslog msg  "Generating SSH keys"
+      action 4.2  cli command "configure terminal"
+      action 4.3  cli command "crypto key generate rsa modulus 2048 label $_info_routername"
+      action 4.4  cli command "end"
+      action 4.5  syslog msg  "End generating SSH keys"
+      action 4.6 end
       !
       line con 0
       exec-timeout 0 0
@@ -340,14 +380,7 @@ nodes:
     y: 150
     configuration: |-
       hostname leaf3
-      vrf definition Mgmt-intf
-      !
-      address-family ipv4
-      exit-address-family
-      !
-      address-family ipv6
-      exit-address-family
-      !
+
       enable password cisco
       no ip domain lookup
       ip domain name virl.info
@@ -355,14 +388,32 @@ nodes:
       !
       interface GigabitEthernet1
       description to sandbox-backend
-      vrf forwarding Mgmt-intf
       ip address 10.10.20.23 255.255.255.0
       negotiation auto
       no mop enabled
       no mop sysid
       no shutdown
       !
-      ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 10.10.20.254
+      ip route 0.0.0.0 0.0.0.0 10.10.20.254
+      !
+      ! https://ghostinthenet.info/generate-ssh-keys-on-startup/
+      event manager applet ping-gateway_and_EEM_SSH_Keygen
+      event timer cron cron-entry "@reboot"
+      action 0.0 info type routername
+      action 0.1 set status "none"
+      action 1.0 cli command "enable"
+      action 2.0 syslog msg  "Start pinging Gateway"
+      action 2.2 cli command "ping 10.10.20.254 repeat 100"
+      action 2.3 syslog msg  "Finishing pinging Gateway"
+      action 3.0 cli command "show ip ssh | include ^SSH"
+      action 3.1 regexp "([ED][^ ]+)" "$_cli_result" result status
+      action 4.0 if $status eq Disabled
+      action 4.1  syslog msg  "Generating SSH keys"
+      action 4.2  cli command "configure terminal"
+      action 4.3  cli command "crypto key generate rsa modulus 2048 label $_info_routername"
+      action 4.4  cli command "end"
+      action 4.5  syslog msg  "End generating SSH keys"
+      action 4.6 end
       !
       line con 0
       exec-timeout 0 0
@@ -398,18 +449,17 @@ nodes:
         label: GigabitEthernet4
         type: physical
   - id: n7
-    label: host-0
+    label: host1
     node_definition: desktop
     x: -1150
     y: -150
     configuration: |-
-      hostname host-0
-      # like this:
-      echo "127.0.0.1   inside-host02" >>/etc/hosts
-      echo "::1         inside-host02" >> /etc/hosts
-      ifconfig eth1 up 10.10.20.30 netmask 255.255.255.0
-      route add -net 0.0.0.0/0 gw 10.10.20.254 dev eth1
-      service lightdm restart
+      hostname host1
+      echo "127.0.0.1   host1" >>/etc/hosts
+      echo "::1         host1" >> /etc/hosts
+      ifconfig eth0 up 10.10.20.31 netmask 255.255.255.0
+      route add -net 0.0.0.0/0 gw 10.10.20.254 dev eth0
+      ping 10.10.20.254 -c 50
     image_definition: desktop-3-13-2-xfce
     tags: []
     interfaces:
@@ -422,17 +472,17 @@ nodes:
         label: eth1
         type: physical
   - id: n8
-    label: host-1
+    label: host2
     node_definition: desktop
     x: -1150
     y: 0
     configuration: |-
-      hostname host-1
-      # like this:
-      echo "127.0.0.1   inside-host02" >>/etc/hosts
-      echo "::1         inside-host02" >> /etc/hosts
-      ifconfig eth1 up 10.10.20.31 netmask 255.255.255.0
-      route add -net 0.0.0.0/0 gw 10.10.20.254 dev eth1
+      hostname host2
+      echo "127.0.0.1   host2" >>/etc/hosts
+      echo "::1         host2" >> /etc/hosts
+      ifconfig eth0 up 10.10.20.32 netmask 255.255.255.0
+      route add -net 0.0.0.0/0 gw 10.10.20.254 dev eth0
+      ping 10.10.20.254 -c 50
     image_definition: desktop-3-13-2-xfce
     tags: []
     interfaces:
@@ -445,17 +495,17 @@ nodes:
         label: eth1
         type: physical
   - id: n9
-    label: host-2
+    label: host3
     node_definition: desktop
     x: -1150
     y: 150
     configuration: |-
-      hostname host-2
-      # like this:
-      echo "127.0.0.1   inside-host02" >>/etc/hosts
-      echo "::1         inside-host02" >> /etc/hosts
-      ifconfig eth1 up 10.10.20.32 netmask 255.255.255.0
-      route add -net 0.0.0.0/0 gw 10.10.20.254 dev eth1
+      hostname host3
+      echo "127.0.0.1   host3" >>/etc/hosts
+      echo "::1         host3" >> /etc/hosts
+      ifconfig eth0 up 10.10.20.33 netmask 255.255.255.0
+      route add -net 0.0.0.0/0 gw 10.10.20.254 dev eth0
+      ping 10.10.20.254 -c 50
     image_definition: desktop-3-13-2-xfce
     tags: []
     interfaces:
