@@ -11,30 +11,30 @@ dist:
     dist-rtr02:
       ansible_host: 10.10.20.175
 
-ansible_lab:
+cml_hosts:
   children:
-    devices:
+    cml_managed_devices:
       hosts:
-        spine1:
+        spine1-20.11:
           ansible_host: 10.10.20.11
-        spine2:
+        spine2-20.12:
           ansible_host: 10.10.20.12
-        leaf1:
+        leaf1-20.21:
           ansible_host: 10.10.20.21
-        leaf2:
+        leaf2-20.22:
           ansible_host: 10.10.20.22
-        leaf3:
+        leaf3-20.23:
           ansible_host: 10.10.20.23
-        host-0:
-          ansible_host: 10.10.20.30
-        host-1:
+        host1-20.31:
           ansible_host: 10.10.20.31
-        host-2:
+        host2-20.32:
           ansible_host: 10.10.20.32
-    unmanaged_devices:
+        host3-20.33:
+          ansible_host: 10.10.20.33
+    cml_unmanaged_devices:
       hosts:
-        oob-mgmt:
-        ext-conn-0:
+        bridge-to-sandbox:
+        sandbox-backend:
 
 lab-mgmt:
   hosts:

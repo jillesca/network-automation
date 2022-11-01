@@ -70,7 +70,7 @@ nodes:
         label: port10
         type: physical
   - id: n2
-    label: spine1
+    label: spine1-20.11
     node_definition: csr1000v
     x: -600
     y: -50
@@ -91,24 +91,24 @@ nodes:
       !
       ip route 0.0.0.0 0.0.0.0 10.10.20.254
       !
-      ! https://ghostinthenet.info/generate-ssh-keys-on-startup/
-      event manager applet ping-gateway_and_EEM_SSH_Keygen
+      !
+      ! https://community.cisco.com/t5/network-management/create-rsa-keys-if-they-do-not-exist/td-p/2614667
+      event manager applet EEM_SSH_Keygen
       event timer cron cron-entry "@reboot"
       action 0.0 info type routername
       action 0.1 set status "none"
+      action 0.2 syslog msg  "Reviewing SSH keys"
       action 1.0 cli command "enable"
-      action 2.0 syslog msg  "Start pinging Gateway"
-      action 2.2 cli command "ping 10.10.20.254 repeat 100"
-      action 2.3 syslog msg  "Finishing pinging Gateway"
-      action 3.0 cli command "show ip ssh | include ^SSH"
-      action 3.1 regexp "([ED][^ ]+)" "$_cli_result" result status
-      action 4.0 if $status eq Disabled
-      action 4.1  syslog msg  "Generating SSH keys"
-      action 4.2  cli command "configure terminal"
-      action 4.3  cli command "crypto key generate rsa modulus 2048 label $_info_routername"
-      action 4.4  cli command "end"
-      action 4.5  syslog msg  "End generating SSH keys"
-      action 4.6 end
+      action 2.0 cli command "show ip ssh | include ^SSH"
+      action 2.1 regexp "([ED][^ ]+)" "$_cli_result" result status
+      action 3.0 if $status eq Disabled
+      action 3.1  syslog msg  "Generating SSH keys"
+      action 3.2  cli command "configure terminal"
+      action 3.3  cli command "crypto key generate rsa modulus 2048 label $_info_routername"
+      action 3.4  cli command "end"
+      action 3.5  syslog msg  "End generating SSH keys"
+      action 3.6 end
+      !
       !
       line con 0
       exec-timeout 0 0
@@ -148,7 +148,7 @@ nodes:
         label: GigabitEthernet5
         type: physical
   - id: n3
-    label: spine2
+    label: spine2-20.12
     node_definition: csr1000v
     x: -600
     y: 50
@@ -169,24 +169,25 @@ nodes:
       !
       ip route 0.0.0.0 0.0.0.0 10.10.20.254
       !
-      ! https://ghostinthenet.info/generate-ssh-keys-on-startup/
-      event manager applet ping-gateway_and_EEM_SSH_Keygen
+      ! https://community.cisco.com/t5/network-management/create-rsa-keys-if-they-do-not-exist/td-p/2614667
+      event manager applet EEM_SSH_Keygen
       event timer cron cron-entry "@reboot"
       action 0.0 info type routername
       action 0.1 set status "none"
+      action 0.2 syslog msg  "Reviewing SSH keys"
       action 1.0 cli command "enable"
-      action 2.0 syslog msg  "Start pinging Gateway"
-      action 2.2 cli command "ping 10.10.20.254 repeat 100"
-      action 2.3 syslog msg  "Finishing pinging Gateway"
-      action 3.0 cli command "show ip ssh | include ^SSH"
-      action 3.1 regexp "([ED][^ ]+)" "$_cli_result" result status
-      action 4.0 if $status eq Disabled
-      action 4.1  syslog msg  "Generating SSH keys"
-      action 4.2  cli command "configure terminal"
-      action 4.3  cli command "crypto key generate rsa modulus 2048 label $_info_routername"
-      action 4.4  cli command "end"
-      action 4.5  syslog msg  "End generating SSH keys"
-      action 4.6 end
+      action 2.0 cli command "show ip ssh | include ^SSH"
+      action 2.1 regexp "([ED][^ ]+)" "$_cli_result" result status
+      action 3.0 if $status eq Disabled
+      action 3.1  syslog msg  "Generating SSH keys"
+      action 3.2  cli command "configure terminal"
+      action 3.3  cli command "crypto key generate rsa modulus 2048 label $_info_routername"
+      action 3.4  cli command "end"
+      action 3.5  syslog msg  "End generating SSH keys"
+      action 3.6 end
+      !
+      !
+      !
       line con 0
       exec-timeout 0 0
       password cisco
@@ -225,7 +226,7 @@ nodes:
         label: GigabitEthernet5
         type: physical
   - id: n4
-    label: leaf1
+    label: leaf1-20.21
     node_definition: csr1000v
     x: -950
     y: -150
@@ -247,24 +248,23 @@ nodes:
       !
       ip route 0.0.0.0 0.0.0.0 10.10.20.254
       !
-      ! https://ghostinthenet.info/generate-ssh-keys-on-startup/
-      event manager applet ping-gateway_and_EEM_SSH_Keygen
+      ! https://community.cisco.com/t5/network-management/create-rsa-keys-if-they-do-not-exist/td-p/2614667
+      event manager applet EEM_SSH_Keygen
       event timer cron cron-entry "@reboot"
       action 0.0 info type routername
       action 0.1 set status "none"
+      action 0.2 syslog msg  "Reviewing SSH keys"
       action 1.0 cli command "enable"
-      action 2.0 syslog msg  "Start pinging Gateway"
-      action 2.2 cli command "ping 10.10.20.254 repeat 100"
-      action 2.3 syslog msg  "Finishing pinging Gateway"
-      action 3.0 cli command "show ip ssh | include ^SSH"
-      action 3.1 regexp "([ED][^ ]+)" "$_cli_result" result status
-      action 4.0 if $status eq Disabled
-      action 4.1  syslog msg  "Generating SSH keys"
-      action 4.2  cli command "configure terminal"
-      action 4.3  cli command "crypto key generate rsa modulus 2048 label $_info_routername"
-      action 4.4  cli command "end"
-      action 4.5  syslog msg  "End generating SSH keys"
-      action 4.6 end
+      action 2.0 cli command "show ip ssh | include ^SSH"
+      action 2.1 regexp "([ED][^ ]+)" "$_cli_result" result status
+      action 3.0 if $status eq Disabled
+      action 3.1  syslog msg  "Generating SSH keys"
+      action 3.2  cli command "configure terminal"
+      action 3.3  cli command "crypto key generate rsa modulus 2048 label $_info_routername"
+      action 3.4  cli command "end"
+      action 3.5  syslog msg  "End generating SSH keys"
+      action 3.6 end
+      !
       !
       line con 0
       exec-timeout 0 0
@@ -300,7 +300,7 @@ nodes:
         label: GigabitEthernet4
         type: physical
   - id: n5
-    label: leaf2
+    label: leaf2-20.22
     node_definition: csr1000v
     x: -950
     y: 0
@@ -321,24 +321,23 @@ nodes:
       !
       ip route 0.0.0.0 0.0.0.0 10.10.20.254
       !
-      ! https://ghostinthenet.info/generate-ssh-keys-on-startup/
-      event manager applet ping-gateway_and_EEM_SSH_Keygen
+      ! https://community.cisco.com/t5/network-management/create-rsa-keys-if-they-do-not-exist/td-p/2614667
+      event manager applet EEM_SSH_Keygen
       event timer cron cron-entry "@reboot"
       action 0.0 info type routername
       action 0.1 set status "none"
+      action 0.2 syslog msg  "Reviewing SSH keys"
       action 1.0 cli command "enable"
-      action 2.0 syslog msg  "Start pinging Gateway"
-      action 2.2 cli command "ping 10.10.20.254 repeat 100"
-      action 2.3 syslog msg  "Finishing pinging Gateway"
-      action 3.0 cli command "show ip ssh | include ^SSH"
-      action 3.1 regexp "([ED][^ ]+)" "$_cli_result" result status
-      action 4.0 if $status eq Disabled
-      action 4.1  syslog msg  "Generating SSH keys"
-      action 4.2  cli command "configure terminal"
-      action 4.3  cli command "crypto key generate rsa modulus 2048 label $_info_routername"
-      action 4.4  cli command "end"
-      action 4.5  syslog msg  "End generating SSH keys"
-      action 4.6 end
+      action 2.0 cli command "show ip ssh | include ^SSH"
+      action 2.1 regexp "([ED][^ ]+)" "$_cli_result" result status
+      action 3.0 if $status eq Disabled
+      action 3.1  syslog msg  "Generating SSH keys"
+      action 3.2  cli command "configure terminal"
+      action 3.3  cli command "crypto key generate rsa modulus 2048 label $_info_routername"
+      action 3.4  cli command "end"
+      action 3.5  syslog msg  "End generating SSH keys"
+      action 3.6 end
+      !
       !
       line con 0
       exec-timeout 0 0
@@ -374,7 +373,7 @@ nodes:
         label: GigabitEthernet4
         type: physical
   - id: n6
-    label: leaf3
+    label: leaf3-20.23
     node_definition: csr1000v
     x: -950
     y: 150
@@ -396,24 +395,23 @@ nodes:
       !
       ip route 0.0.0.0 0.0.0.0 10.10.20.254
       !
-      ! https://ghostinthenet.info/generate-ssh-keys-on-startup/
-      event manager applet ping-gateway_and_EEM_SSH_Keygen
+      ! https://community.cisco.com/t5/network-management/create-rsa-keys-if-they-do-not-exist/td-p/2614667
+      event manager applet EEM_SSH_Keygen
       event timer cron cron-entry "@reboot"
       action 0.0 info type routername
       action 0.1 set status "none"
+      action 0.2 syslog msg  "Reviewing SSH keys"
       action 1.0 cli command "enable"
-      action 2.0 syslog msg  "Start pinging Gateway"
-      action 2.2 cli command "ping 10.10.20.254 repeat 100"
-      action 2.3 syslog msg  "Finishing pinging Gateway"
-      action 3.0 cli command "show ip ssh | include ^SSH"
-      action 3.1 regexp "([ED][^ ]+)" "$_cli_result" result status
-      action 4.0 if $status eq Disabled
-      action 4.1  syslog msg  "Generating SSH keys"
-      action 4.2  cli command "configure terminal"
-      action 4.3  cli command "crypto key generate rsa modulus 2048 label $_info_routername"
-      action 4.4  cli command "end"
-      action 4.5  syslog msg  "End generating SSH keys"
-      action 4.6 end
+      action 2.0 cli command "show ip ssh | include ^SSH"
+      action 2.1 regexp "([ED][^ ]+)" "$_cli_result" result status
+      action 3.0 if $status eq Disabled
+      action 3.1  syslog msg  "Generating SSH keys"
+      action 3.2  cli command "configure terminal"
+      action 3.3  cli command "crypto key generate rsa modulus 2048 label $_info_routername"
+      action 3.4  cli command "end"
+      action 3.5  syslog msg  "End generating SSH keys"
+      action 3.6 end
+      !
       !
       line con 0
       exec-timeout 0 0
@@ -449,7 +447,7 @@ nodes:
         label: GigabitEthernet4
         type: physical
   - id: n7
-    label: host1
+    label: host1-20.31
     node_definition: desktop
     x: -1150
     y: -150
@@ -472,7 +470,7 @@ nodes:
         label: eth1
         type: physical
   - id: n8
-    label: host2
+    label: host2-20.32
     node_definition: desktop
     x: -1150
     y: 0
@@ -495,7 +493,7 @@ nodes:
         label: eth1
         type: physical
   - id: n9
-    label: host3
+    label: host3-20.33
     node_definition: desktop
     x: -1150
     y: 150
