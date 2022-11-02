@@ -1,4 +1,7 @@
 # https://stackoverflow.com/questions/10821539/jinja-keep-indentation-on-include-or-macro
+{% macro identation() -%}
+{%- endmacro -%}
+
 lab:
   description: base topology for ansible network automation
   notes: ""
@@ -86,44 +89,8 @@ nodes:
       no mop sysid
       no shutdown
       !
-      !
-      !
-      enable password cisco
-      no ip domain lookup
-      ip domain name virl.info
-      username cisco privilege 15 secret cisco
-      !
-      ip route 0.0.0.0 0.0.0.0 10.10.20.254
-      !
-      !
-      ! https://community.cisco.com/t5/network-management/create-rsa-keys-if-they-do-not-exist/td-p/2614667
-      event manager applet EEM_SSH_Keygen
-      event timer cron cron-entry "@reboot"
-      action 0.0 info type routername
-      action 0.1 set status "none"
-      action 0.2 syslog msg  "Reviewing SSH keys"
-      action 1.0 cli command "enable"
-      action 2.0 cli command "show ip ssh | include ^SSH"
-      action 2.1 regexp "([ED][^ ]+)" "$_cli_result" result status
-      action 3.0 if $status eq Disabled
-      action 3.1  syslog msg  "Generating SSH keys"
-      action 3.2  cli command "configure terminal"
-      action 3.3  cli command "crypto key generate rsa modulus 2048 label $_info_routername"
-      action 3.4  cli command "end"
-      action 3.5  syslog msg  "End generating SSH keys"
-      action 3.6 end
-      !
-      !
-      line con 0
-      exec-timeout 0 0
-      password cisco
-      stopbits 1
-      line vty 0 4
-      exec-timeout 720 0
-      password cisco
-      login local
-      transport input telnet ssh
-      !
+{% macro indentation() %}{% include 'files/templates/ios/bootstrap.j2' %}{% endmacro %}
+{{ indentation()|indent(6, True) }}
       !
       end
     image_definition: csr1000v-170302
@@ -168,44 +135,8 @@ nodes:
       no mop sysid
       no shutdown
       !
-      !
-      !
-      enable password cisco
-      no ip domain lookup
-      ip domain name virl.info
-      username cisco privilege 15 secret cisco
-      !
-      ip route 0.0.0.0 0.0.0.0 10.10.20.254
-      !
-      !
-      ! https://community.cisco.com/t5/network-management/create-rsa-keys-if-they-do-not-exist/td-p/2614667
-      event manager applet EEM_SSH_Keygen
-      event timer cron cron-entry "@reboot"
-      action 0.0 info type routername
-      action 0.1 set status "none"
-      action 0.2 syslog msg  "Reviewing SSH keys"
-      action 1.0 cli command "enable"
-      action 2.0 cli command "show ip ssh | include ^SSH"
-      action 2.1 regexp "([ED][^ ]+)" "$_cli_result" result status
-      action 3.0 if $status eq Disabled
-      action 3.1  syslog msg  "Generating SSH keys"
-      action 3.2  cli command "configure terminal"
-      action 3.3  cli command "crypto key generate rsa modulus 2048 label $_info_routername"
-      action 3.4  cli command "end"
-      action 3.5  syslog msg  "End generating SSH keys"
-      action 3.6 end
-      !
-      !
-      line con 0
-      exec-timeout 0 0
-      password cisco
-      stopbits 1
-      line vty 0 4
-      exec-timeout 720 0
-      password cisco
-      login local
-      transport input telnet ssh
-      !
+{% macro indentation() %}{% include 'files/templates/ios/bootstrap.j2' %}{% endmacro %}
+{{ indentation()|indent(6, True) }}
       !
       !
       end
@@ -252,44 +183,8 @@ nodes:
       no mop sysid
       no shutdown
       !
-      !
-      !
-      enable password cisco
-      no ip domain lookup
-      ip domain name virl.info
-      username cisco privilege 15 secret cisco
-      !
-      ip route 0.0.0.0 0.0.0.0 10.10.20.254
-      !
-      !
-      ! https://community.cisco.com/t5/network-management/create-rsa-keys-if-they-do-not-exist/td-p/2614667
-      event manager applet EEM_SSH_Keygen
-      event timer cron cron-entry "@reboot"
-      action 0.0 info type routername
-      action 0.1 set status "none"
-      action 0.2 syslog msg  "Reviewing SSH keys"
-      action 1.0 cli command "enable"
-      action 2.0 cli command "show ip ssh | include ^SSH"
-      action 2.1 regexp "([ED][^ ]+)" "$_cli_result" result status
-      action 3.0 if $status eq Disabled
-      action 3.1  syslog msg  "Generating SSH keys"
-      action 3.2  cli command "configure terminal"
-      action 3.3  cli command "crypto key generate rsa modulus 2048 label $_info_routername"
-      action 3.4  cli command "end"
-      action 3.5  syslog msg  "End generating SSH keys"
-      action 3.6 end
-      !
-      !
-      line con 0
-      exec-timeout 0 0
-      password cisco
-      stopbits 1
-      line vty 0 4
-      exec-timeout 720 0
-      password cisco
-      login local
-      transport input telnet ssh
-      !
+{% macro indentation() %}{% include 'files/templates/ios/bootstrap.j2' %}{% endmacro %}
+{{ indentation()|indent(6, True) }}
       !
       end
     image_definition: csr1000v-170302
@@ -330,44 +225,8 @@ nodes:
       no mop sysid
       no shutdown
       !
-      !
-      !
-      enable password cisco
-      no ip domain lookup
-      ip domain name virl.info
-      username cisco privilege 15 secret cisco
-      !
-      ip route 0.0.0.0 0.0.0.0 10.10.20.254
-      !
-      !
-      ! https://community.cisco.com/t5/network-management/create-rsa-keys-if-they-do-not-exist/td-p/2614667
-      event manager applet EEM_SSH_Keygen
-      event timer cron cron-entry "@reboot"
-      action 0.0 info type routername
-      action 0.1 set status "none"
-      action 0.2 syslog msg  "Reviewing SSH keys"
-      action 1.0 cli command "enable"
-      action 2.0 cli command "show ip ssh | include ^SSH"
-      action 2.1 regexp "([ED][^ ]+)" "$_cli_result" result status
-      action 3.0 if $status eq Disabled
-      action 3.1  syslog msg  "Generating SSH keys"
-      action 3.2  cli command "configure terminal"
-      action 3.3  cli command "crypto key generate rsa modulus 2048 label $_info_routername"
-      action 3.4  cli command "end"
-      action 3.5  syslog msg  "End generating SSH keys"
-      action 3.6 end
-      !
-      !
-      line con 0
-      exec-timeout 0 0
-      password cisco
-      stopbits 1
-      line vty 0 4
-      exec-timeout 720 0
-      password cisco
-      login local
-      transport input telnet ssh
-      !
+{% macro indentation() %}{% include 'files/templates/ios/bootstrap.j2' %}{% endmacro %}
+{{ indentation()|indent(6, True) }}
       !
       end
     image_definition: csr1000v-170302
@@ -408,44 +267,8 @@ nodes:
       no mop sysid
       no shutdown
       !
-      !
-      !
-      enable password cisco
-      no ip domain lookup
-      ip domain name virl.info
-      username cisco privilege 15 secret cisco
-      !
-      ip route 0.0.0.0 0.0.0.0 10.10.20.254
-      !
-      !
-      ! https://community.cisco.com/t5/network-management/create-rsa-keys-if-they-do-not-exist/td-p/2614667
-      event manager applet EEM_SSH_Keygen
-      event timer cron cron-entry "@reboot"
-      action 0.0 info type routername
-      action 0.1 set status "none"
-      action 0.2 syslog msg  "Reviewing SSH keys"
-      action 1.0 cli command "enable"
-      action 2.0 cli command "show ip ssh | include ^SSH"
-      action 2.1 regexp "([ED][^ ]+)" "$_cli_result" result status
-      action 3.0 if $status eq Disabled
-      action 3.1  syslog msg  "Generating SSH keys"
-      action 3.2  cli command "configure terminal"
-      action 3.3  cli command "crypto key generate rsa modulus 2048 label $_info_routername"
-      action 3.4  cli command "end"
-      action 3.5  syslog msg  "End generating SSH keys"
-      action 3.6 end
-      !
-      !
-      line con 0
-      exec-timeout 0 0
-      password cisco
-      stopbits 1
-      line vty 0 4
-      exec-timeout 720 0
-      password cisco
-      login local
-      transport input telnet ssh
-      !
+{% macro indentation() %}{% include 'files/templates/ios/bootstrap.j2' %}{% endmacro %}
+{{ indentation()|indent(6, True) }}
       !
       end
     image_definition: csr1000v-170302
