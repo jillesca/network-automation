@@ -1,0 +1,15 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Ansible Playbook",
+            "type": "python",
+            "request": "launch",
+            "program": "bin/run.py",
+            "args": [
+                "playbooks test.yml"
+            ],
+            "console": "integratedTerminal"
+        }
+    ]
+}
