@@ -1,9 +1,0 @@
-# if you are using your own environment update the credentials
----
-ansible_ssh_pass: cisco
-ansible_user: cisco
-ansible_network_os: ios
-
-snmp_community: cisco_test
-snmp_location: Lisbon_HQ
-snmp_contact: Jesus_Illescas

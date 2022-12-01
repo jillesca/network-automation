@@ -1,0 +1,35 @@
+# How to define an inventory
+# https://docs.ansible.com/ansible/latest/network/getting_started/first_inventory.html
+
+# Hosts used here are from `Cisco DevNet Sandbox`. See root README for more info.
+# if you are using your own devices, replace the host/IP and update ansible/group_vars/all.yml
+---
+all:
+  vars:
+    ansible_user: "{{ lookup('env', 'ANSIBLE_USER') | default('cisco', true) }}"
+    ansible_password: "{{ lookup('env', 'ANSIBLE_PASSWORD') | default('cisco', true) }}"
+    ansible_network_os: ios
+    ansible_ssh_pass: cisco
+  children:
+    cml_managed_devices:
+      children:
+        iosxe_routers:
+          hosts:
+            spine1-20.11:
+              ansible_host: 10.10.20.11
+            spine2-20.12:
+              ansible_host: 10.10.20.12
+            leaf1-20.21:
+              ansible_host: 10.10.20.21
+            leaf2-20.22:
+              ansible_host: 10.10.20.22
+            leaf3-20.23:
+              ansible_host: 10.10.20.23
+        linux_hosts:
+          hosts:
+            host1-20.31:
+              ansible_host: 10.10.20.31
+            host2-20.32:
+              ansible_host: 10.10.20.32
+            host3-20.33:
+              ansible_host: 10.10.20.33

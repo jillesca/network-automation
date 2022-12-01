@@ -5,6 +5,8 @@
   - [Build and use Ansible on a Container](#build-and-use-ansible-on-a-container)
   - [Reserve a lab (optional)](#reserve-a-lab-optional)
   - [Github Runner](#github-runner)
+  - [managing cml on ansible](#managing-cml-on-ansible)
+    - [Clean a lab](#clean-a-lab)
 
 ## Intro
 
@@ -78,3 +80,11 @@ To add a runner go to:
 `Settings > Actions > Runners` and click on `New self-hosted runner`. From there chose your OS and follow the instructions.
 
 Once the runner is added, you can see its status on the runner tab.
+
+## managing cml on ansible
+
+### Clean a lab
+
+```
+ansible-playbook cisco.cml.clean -e cml_lab='Small-NXOS/IOSXE-Network'
+```

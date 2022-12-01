@@ -1,7 +1,3 @@
-# https://stackoverflow.com/questions/10821539/jinja-keep-indentation-on-include-or-macro
-{% macro identation() -%}
-{%- endmacro -%}
-
 lab:
   description: base topology for ansible network automation
   notes: ""
@@ -78,21 +74,7 @@ nodes:
     node_definition: csr1000v
     x: -600
     y: -50
-    configuration: |-
-      hostname spine1
-      !
-      interface GigabitEthernet1
-      description to sandbox-backend
-      ip address 10.10.20.11 255.255.255.0
-      negotiation auto
-      no mop enabled
-      no mop sysid
-      no shutdown
-      !
-{% macro indentation() %}{% include 'files/templates/ios/bootstrap.j2' %}{% endmacro %}
-{{ indentation()|indent(6, True) }}
-      !
-      end
+    configuration: ""
     image_definition: csr1000v-170302
     tags: []
     interfaces:
@@ -124,22 +106,7 @@ nodes:
     node_definition: csr1000v
     x: -600
     y: 50
-    configuration: |-
-      hostname spine2
-      !
-      interface GigabitEthernet1
-      description to sandbox-backend
-      ip address 10.10.20.12 255.255.255.0
-      negotiation auto
-      no mop enabled
-      no mop sysid
-      no shutdown
-      !
-{% macro indentation() %}{% include 'files/templates/ios/bootstrap.j2' %}{% endmacro %}
-{{ indentation()|indent(6, True) }}
-      !
-      !
-      end
+    configuration: ""
     image_definition: csr1000v-170302
     tags: []
     interfaces:
@@ -171,22 +138,7 @@ nodes:
     node_definition: csr1000v
     x: -950
     y: -150
-    configuration: |-
-      hostname leaf1
-      !
-      interface GigabitEthernet1
-      description to sandbox-backend
-      vrf forwarding Mgmt-intf
-      ip address 10.10.20.21 255.255.255.0
-      negotiation auto
-      no mop enabled
-      no mop sysid
-      no shutdown
-      !
-{% macro indentation() %}{% include 'files/templates/ios/bootstrap.j2' %}{% endmacro %}
-{{ indentation()|indent(6, True) }}
-      !
-      end
+    configuration: ""
     image_definition: csr1000v-170302
     tags: []
     interfaces:
@@ -214,21 +166,7 @@ nodes:
     node_definition: csr1000v
     x: -950
     y: 0
-    configuration: |-
-      hostname leaf2
-      !
-      interface GigabitEthernet1
-      description to sandbox-backend
-      ip address 10.10.20.22 255.255.255.0
-      negotiation auto
-      no mop enabled
-      no mop sysid
-      no shutdown
-      !
-{% macro indentation() %}{% include 'files/templates/ios/bootstrap.j2' %}{% endmacro %}
-{{ indentation()|indent(6, True) }}
-      !
-      end
+    configuration: ""
     image_definition: csr1000v-170302
     tags: []
     interfaces:
@@ -256,21 +194,7 @@ nodes:
     node_definition: csr1000v
     x: -950
     y: 150
-    configuration: |-
-      hostname leaf3
-      !
-      interface GigabitEthernet1
-      description to sandbox-backend
-      ip address 10.10.20.23 255.255.255.0
-      negotiation auto
-      no mop enabled
-      no mop sysid
-      no shutdown
-      !
-{% macro indentation() %}{% include 'files/templates/ios/bootstrap.j2' %}{% endmacro %}
-{{ indentation()|indent(6, True) }}
-      !
-      end
+    configuration: ""
     image_definition: csr1000v-170302
     tags: []
     interfaces:
@@ -298,12 +222,7 @@ nodes:
     node_definition: desktop
     x: -1150
     y: -150
-    configuration: |-
-      hostname host1
-      echo "127.0.0.1   host1" >>/etc/hosts
-      echo "::1         host1" >> /etc/hosts
-      ifconfig eth0 up 10.10.20.31 netmask 255.255.255.0
-      route add -net 0.0.0.0/0 gw 10.10.20.254 dev eth0
+    configuration: ""
     image_definition: desktop-3-13-2-xfce
     tags: []
     interfaces:
@@ -320,12 +239,7 @@ nodes:
     node_definition: desktop
     x: -1150
     y: 0
-    configuration: |-
-      hostname host2
-      echo "127.0.0.1   host2" >>/etc/hosts
-      echo "::1         host2" >> /etc/hosts
-      ifconfig eth0 up 10.10.20.32 netmask 255.255.255.0
-      route add -net 0.0.0.0/0 gw 10.10.20.254 dev eth0
+    configuration: ""
     image_definition: desktop-3-13-2-xfce
     tags: []
     interfaces:
@@ -342,12 +256,7 @@ nodes:
     node_definition: desktop
     x: -1150
     y: 150
-    configuration: |-
-      hostname host3
-      echo "127.0.0.1   host3" >>/etc/hosts
-      echo "::1         host3" >> /etc/hosts
-      ifconfig eth0 up 10.10.20.33 netmask 255.255.255.0
-      route add -net 0.0.0.0/0 gw 10.10.20.254 dev eth0
+    configuration: ""
     image_definition: desktop-3-13-2-xfce
     tags: []
     interfaces:
