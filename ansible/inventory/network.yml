@@ -11,7 +11,7 @@ all:
     ansible_network_os: ios
     ansible_ssh_pass: cisco
   children:
-    cml_managed_devices:
+    network:
       children:
         iosxe_routers:
           hosts:
@@ -25,6 +25,8 @@ all:
               ansible_host: 10.10.20.22
             leaf3-20.23:
               ansible_host: 10.10.20.23
+    clients:
+      children:
         linux_hosts:
           hosts:
             host1-20.31:
