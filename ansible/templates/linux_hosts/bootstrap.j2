@@ -2,4 +2,4 @@ hostname {{ inventory_hostname }}
 echo "127.0.0.1   {{ inventory_hostname }}" >>/etc/hosts
 echo "::1         {{ inventory_hostname }}" >> /etc/hosts
 ifconfig eth0 up {{ ansible_host }} netmask 255.255.255.0
-route add -net 0.0.0.0/0 gw 10.10.20.254 dev eth0
+route add -net 0.0.0.0/0 gw {{ network_gateway }} dev eth0

@@ -4,10 +4,10 @@
   gather_facts: no
 
   tasks:
-    - name: Gather all legacy facts
+    - name: Gather cisco facts
       cisco.ios.ios_facts:
         gather_subset: all
 
-    - name: print show facts
+    - name: Print cisco facts
       ansible.builtin.debug:
         var: ansible_facts

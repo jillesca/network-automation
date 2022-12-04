@@ -19,7 +19,7 @@ ip address {{ ansible_host }} 255.255.255.0
 negotiation auto
 no shutdown
 !
-ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 10.10.20.254
+ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 {{ network_gateway }}
 !
 ip http server
 ip http secure-server
@@ -34,10 +34,12 @@ crypto key generate rsa modulus 2048 label RSA_SSH
 !
 event manager applet ping_gateway
 event timer cron cron-entry "@reboot"
-action 0.1 syslog msg "Beginning to Ping Gateway"
+action 0.1 syslog msg "Beginning to Ping Gateway and Bastion"
 action 1.0 cli command "enable"
-action 1.1 cli command "ping vrf Mgmt-intf 10.10.20.254"
-action 1.2 syslog msg "End Pinging Gateway"
+action 1.1 cli command "ping vrf Mgmt-intf {{ network_gateway }}"
+action 1.2 syslog msg "Beginning to Ping Gateway"
+action 1.3 cli command "ping vrf Mgmt-intf {{ network_bastion }}"
+action 1.4 syslog msg "End Pinging Gateway and Bastion"
 !
 line con 0
 exec-timeout 0 0

@@ -1,0 +1,8 @@
+network_gateway: 10.10.20.254
+network_bastion: 10.10.20.50
+network_bastion_user: "developer"
+ansible_user: "{{ lookup('env', 'ANSIBLE_USER') | default('cisco', true) }}"
+ansible_password: "{{ lookup('env', 'ANSIBLE_PASSWORD') | default('cisco', true) }}"
+ansible_network_os: ios
+# if you are not using a ssh bastion/jump host, comment this variable
+ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q {{ network_bastion_user }}@{{ network_bastion }}"'
