@@ -129,8 +129,15 @@ Enter into the container
 docker exec -it cml /bin/sh
 ```
 
+Create keys
+
 ```bash
 ssh-keygen -f /home/.ssh/cml -t ed25519 -C 'CML_Automation_key' -N ''
+```
+
+copy keys to `authorized_keys` file
+
+```bash
 cp /home/.ssh/cml.pub /home/.ssh/authorized_keys
 ```
 
@@ -144,12 +151,19 @@ scp /home/.ssh/authorized_keys developer@10.10.20.50:/home/developer/.ssh
 
 Start your ssh-agent and add your keys
 
+Execute your ssh agent.
+
 ```bash
 eval $(ssh-agent -s)
+```
+
+Add your keys to your agent
+
+```bash
 ssh-add /home/.ssh/cml
 ```
 
-test
+test ssh is using your keys. Should not prompt for your password
 
 ```bash
 ssh developer@10.10.20.50
