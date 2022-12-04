@@ -10,6 +10,7 @@
     - [Create a lab](#create-a-lab)
     - [See ansible inventory](#see-ansible-inventory)
     - [See CML inventory](#see-cml-inventory)
+  - [Create ssh keys](#create-ssh-keys)
 
 ## Intro
 
@@ -118,4 +119,38 @@ ansible-inventory --graph
 
 ```
 ansible-playbook cisco.cml.inventory
+```
+
+## Create ssh keys
+
+Enter into the container
+
+```bash
+docker exec -it cml /bin/sh
+```
+
+```bash
+ssh-keygen -f /home/.ssh/cml -t ed25519 -C 'CML_Automation_key' -N ''
+cp /home/.ssh/cml.pub /home/.ssh/authorized_keys
+```
+
+copy the keys to the VM
+
+At the time of writing the VM on the Cisco sandbox uses the IP `10.10.20.50`. Replace this IP with the address of the host you want to use as bastion.
+
+```bash
+scp /home/.ssh/authorized_keys developer@10.10.20.50:/home/developer/.ssh
+```
+
+Start your ssh-agent and add your keys
+
+```bash
+eval $(ssh-agent -s)
+ssh-add /home/.ssh/cml
+```
+
+test
+
+```bash
+ssh developer@10.10.20.50
 ```
