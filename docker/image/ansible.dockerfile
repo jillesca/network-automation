@@ -1,8 +1,10 @@
 # syntax=docker/dockerfile:1
 FROM python:alpine3.16 AS base
 COPY ./docker/ansible/requirements.txt .
-RUN pip3 install -r requirements.txt
-WORKDIR home
+RUN apk add linux-headers \
+    && apk add libssh-dev \
+    && pip3 install -r requirements.txt
+WORKDIR /home
 
 # If you want to use what you built directly from the base image
 FROM base AS prod

@@ -13,13 +13,10 @@ ip domain name virl.info
 username {{ ansible_user }} privilege 15 secret 0 {{ ansible_password }}
 !
 interface {{ mgmt_interface }}
-no switchport
 description to sandbox-backend
 vrf forwarding Mgmt-intf
 ip address {{ ansible_host }} 255.255.255.0
 negotiation auto
-no mop enabled
-no mop sysid
 no shutdown
 !
 ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 10.10.20.254
@@ -34,6 +31,13 @@ ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
 ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
 !
 crypto key generate rsa modulus 2048 label RSA_SSH
+!
+event manager applet ping_gateway
+event timer cron cron-entry "@reboot"
+action 0.1 syslog msg "Beginning to Ping Gateway"
+action 1.0 cli command "enable"
+action 1.1 cli command "ping vrf Mgmt-intf 10.10.20.254"
+action 1.2 syslog msg "End Pinging Gateway"
 !
 line con 0
 exec-timeout 0 0

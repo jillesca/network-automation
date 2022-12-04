@@ -1,21 +1,6 @@
 version: "3.8"
 
 services:
-  cml:
-    image: jillesca/ansible:cml1.0
-    container_name: cml
-    tty: true
-    volumes:
-      - ./../ansible:/home
-    environment:
-      CML_USERNAME: ${CML_USERNAME}
-      CML_PASSWORD: ${CML_PASSWORD}
-      CML_HOST: ${CML_HOST}
-      CML_LAB: ${CML_LAB}
-      CML_VERIFY_CERT: ${CML_VERIFY_CERT}
-  # to run only this service
-  # docker-compose -f ./docker/ansible.docker-compose.yml up -d cml
-
   ansible:
     image: jillesca/ansible:version1.0
     container_name: ansible
@@ -26,7 +11,7 @@ services:
     # build:
     #   context: ../
     #   target: base
-    #   dockerfile: ./docker/ansible/base-ansible.dockerfile
+    #   dockerfile: ./docker/image/base-ansible.dockerfile
     volumes:
       - ./../ansible:/home
       #
@@ -37,7 +22,7 @@ services:
 
 # Must be executed from ROOT dir
 # otherwise volumes dir must be updated
-# docker-compose -f ./docker/ansible.docker-compose.yml up -d ansible
+# docker-compose -f ./docker/ansible.docker-compose.yml up -d
 
 # To enter the contaienr afte it runs
 # docker exec -it ansible /bin/sh

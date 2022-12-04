@@ -88,15 +88,15 @@ Once the runner is added, you can see its status on the runner tab.
 
 ### Clean a lab
 
-_tip_: if you have spaces in your lab name use `'` inside `""`
+If you want to specify the lab to wipe
 
-if you want to specify the lab to wipe
+_tip_: if you have spaces in your lab name use double quotations, example: `'` inside `""`
 
 ```
 ansible-playbook cisco.cml.clean -e cml_lab="'Small NXOS/IOSXE Network'"
 ```
 
-or if have the lab specified on the `cml_lab` env var.
+Or if have the lab specified on the `cml_lab` env var.
 
 ```
 ansible-playbook cisco.cml.clean
@@ -105,7 +105,7 @@ ansible-playbook cisco.cml.clean
 ### Create a lab
 
 ```
-ansible-playbook cisco.cml.build -e startup='host' -e wait='yes'
+ansible-playbook cisco.cml.build -e startup='host'
 ```
 
 ### See ansible inventory

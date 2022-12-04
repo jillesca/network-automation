@@ -1,0 +1,13 @@
+- name: Show version
+  hosts: network
+  connection: ansible.builtin.network_cli
+  gather_facts: no
+
+  tasks:
+    - name: Gather all legacy facts
+      cisco.ios.ios_facts:
+        gather_subset: all
+
+    - name: print show facts
+      ansible.builtin.debug:
+        var: ansible_facts
