@@ -18,13 +18,3 @@ all:
               ansible_host: 10.10.20.22
             leaf3-20.23:
               ansible_host: 10.10.20.23
-    clients:
-      children:
-        linux_hosts:
-          hosts:
-            host1-20.31:
-              ansible_host: 10.10.20.31
-            host2-20.32:
-              ansible_host: 10.10.20.32
-            host3-20.33:
-              ansible_host: 10.10.20.33
