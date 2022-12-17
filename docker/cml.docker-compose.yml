@@ -13,5 +13,4 @@ services:
       CML_HOST: ${CML_HOST}
       CML_LAB: ${CML_LAB}
       CML_VERIFY_CERT: ${CML_VERIFY_CERT}
-  # to run only this service
   # docker-compose -f ./docker/cml.docker-compose.yml up -d

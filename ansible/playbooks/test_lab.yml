@@ -1,4 +1,4 @@
-- name: Show version
+- name: Show cisco facts
   hosts: network
   connection: ansible.builtin.network_cli
   gather_facts: no
