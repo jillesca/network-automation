@@ -17,7 +17,7 @@ On this repo, you will find examples for:
 
 > All commands added on the repo are assumming are being executed from the `ROOT` directory of the project, if you are not on the root directory, you need to update the paths if the commands are using it.
 
-Every release on the repo, matches an article written in my personal blog. _Major changes between releases are introduced_, therefore if you follow the articles, **make sure you are looking at the corresponding release.**
+Every release on the repo, matches an article written in my personal blog. _Major changes between releases are introduced_, therefore if you follow the articles, **make sure you are looking at the corresponding release.** The Articles have links to their corresponded release.
 
 So far the list of releases are:
 
