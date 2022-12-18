@@ -21,10 +21,10 @@ Every release on the repo, matches an article written in my personal blog. _Majo
 
 So far the list of releases are:
 
-- Github Release: [Ansible in a Container](https://github.com/jillesca/network-automation/tree/v0.1.0)
-  - You can find a detailed explanation [on my personal blog - Ansible in a Container](https://netcode.rocks/blog/ansible-container)
-- Github Release: [Automate network topologies with CML, Ansible & Docker.](#)
-  - You can find a detailed explanation [on my personal blog - Automate network topologies with CML, Ansible & Docker.](https://netcode.rocks/blog/automate_topologies_with_ansible_cml_docker)
+- [Ansible in a Container](https://github.com/jillesca/network-automation/tree/v0.1.0)
+  - See a detailed explanation [on my personal blog - Ansible in a Container](https://netcode.rocks/blog/ansible-container)
+- [Automate network topologies with CML, Ansible & Docker.](https://github.com/jillesca/network-automation/tree/v1.0.0)
+  - See a detailed explanation [on my personal blog - Automate network topologies with CML, Ansible & Docker.](https://netcode.rocks/blog/automate_topologies_with_ansible_cml_docker)
 
 # Lab used
 
@@ -34,7 +34,7 @@ CML or [Cisco Modelling Labs](https://developer.cisco.com/docs/sandbox/#!network
 
 ```
 docker-compose -f ./docker/cml.docker-compose.yml up -d
-
+docker exec -it cml /bin/sh
 ansible-playbook cisco.cml.build -e startup='host'
 ```
 
