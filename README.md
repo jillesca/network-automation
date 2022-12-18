@@ -1,12 +1,12 @@
 # Network Automation
 
 - [Network Automation](#network-automation)
-  - [Intro](#intro)
-  - [Lab used](#lab-used)
-  - [To Create a lab](#to-create-a-lab)
-    - [See ansible inventory](#see-ansible-inventory)
+- [Intro](#intro)
+- [Lab used](#lab-used)
+- [Create a lab](#create-a-lab)
+  - [See ansible inventory](#see-ansible-inventory)
 
-## Intro
+# Intro
 
 I'm using this repo to practice some network automation codes, pipelines. As time passes I'm planning to add more functions/examples over time.
 
@@ -26,11 +26,11 @@ So far the list of releases are:
 - Github Release: [Automate network topologies with CML, Ansible & Docker.](#)
   - You can find a detailed explanation [on my personal blog - Automate network topologies with CML, Ansible & Docker.](https://netcode.rocks/blog/automate_topologies_with_ansible_cml_docker)
 
-## Lab used
+# Lab used
 
 CML or [Cisco Modelling Labs](https://developer.cisco.com/docs/sandbox/#!networking/networking-overview) is used for this repo, the reason is because the `Devnet Sandbox` is free. Reserve a lab to get started.
 
-## To Create a lab
+# Create a lab
 
 ```
 docker-compose -f ./docker/cml.docker-compose.yml up -d
@@ -38,7 +38,7 @@ docker-compose -f ./docker/cml.docker-compose.yml up -d
 ansible-playbook cisco.cml.build -e startup='host'
 ```
 
-### See ansible inventory
+## See ansible inventory
 
 ```
 ansible-inventory --graph
