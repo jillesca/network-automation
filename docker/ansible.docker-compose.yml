@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   ansible:
-    image: jillesca/ansible:version1.0
+    image: jillesca/ansible:version1.1
     container_name: ansible
     tty: true
     # If you want to build your own image
@@ -11,7 +11,7 @@ services:
     # build:
     #   context: ../
     #   target: base
-    #   dockerfile: ./docker/ansible/base-ansible.dockerfile
+    #   dockerfile: ./docker/image/base-ansible.dockerfile
     volumes:
       - ./../ansible:/home
       #

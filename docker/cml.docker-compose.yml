@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  cml:
+    image: jillesca/ansible:cml1.1
+    container_name: cml
+    tty: true
+    volumes:
+      - ./../ansible:/home
+    environment:
+      CML_USERNAME: ${CML_USERNAME}
+      CML_PASSWORD: ${CML_PASSWORD}
+      CML_HOST: ${CML_HOST}
+      CML_LAB: ${CML_LAB}
+      CML_VERIFY_CERT: ${CML_VERIFY_CERT}
+  # docker-compose -f ./docker/cml.docker-compose.yml up -d

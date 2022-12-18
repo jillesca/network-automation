@@ -1,0 +1,629 @@
+# https://stackoverflow.com/questions/10821539/jinja-keep-indentation-on-include-or-macro
+lab:
+  description: base topology for ansible network automation
+  notes: ""
+  timestamp: 1667148740.222362
+  title: ansible_base_lab
+  version: 0.0.4
+nodes:
+  - id: n0
+    label: bridge-to-sandbox
+    node_definition: external_connector
+    x: -650
+    y: -250
+    configuration: bridge0
+    tags: []
+    interfaces:
+      - id: i0
+        slot: 0
+        label: port
+        type: physical
+  - id: n1
+    label: sandbox-backend
+    node_definition: unmanaged_switch
+    x: -750
+    y: -200
+    configuration: ""
+    tags: []
+    interfaces:
+      - id: i0
+        slot: 0
+        label: port0
+        type: physical
+      - id: i1
+        slot: 1
+        label: port1
+        type: physical
+      - id: i2
+        slot: 2
+        label: port2
+        type: physical
+      - id: i3
+        slot: 3
+        label: port3
+        type: physical
+      - id: i4
+        slot: 4
+        label: port4
+        type: physical
+      - id: i5
+        slot: 5
+        label: port5
+        type: physical
+      - id: i6
+        slot: 6
+        label: port6
+        type: physical
+      - id: i7
+        slot: 7
+        label: port7
+        type: physical
+      - id: i8
+        slot: 8
+        label: port8
+        type: physical
+      - id: i9
+        slot: 9
+        label: port9
+        type: physical
+      - id: i10
+        slot: 10
+        label: port10
+        type: physical
+  - id: n2
+    label: spine1-20.11
+    node_definition: csr1000v
+    x: -600
+    y: -50
+    configuration: |-
+      hostname spine1
+      !
+      interface GigabitEthernet1
+      description to sandbox-backend
+      ip address 10.10.20.11 255.255.255.0
+      negotiation auto
+      no mop enabled
+      no mop sysid
+      no shutdown
+      !
+      !
+      !
+      enable password cisco
+      no ip domain lookup
+      ip domain name virl.info
+      username cisco privilege 15 secret cisco
+      !
+      ip route 0.0.0.0 0.0.0.0 10.10.20.254
+      !
+      !
+      ! https://community.cisco.com/t5/network-management/create-rsa-keys-if-they-do-not-exist/td-p/2614667
+      event manager applet EEM_SSH_Keygen
+      event timer cron cron-entry "@reboot"
+      action 0.0 info type routername
+      action 0.1 set status "none"
+      action 0.2 syslog msg  "Reviewing SSH keys"
+      action 1.0 cli command "enable"
+      action 2.0 cli command "show ip ssh | include ^SSH"
+      action 2.1 regexp "([ED][^ ]+)" "$_cli_result" result status
+      action 3.0 if $status eq Disabled
+      action 3.1  syslog msg  "Generating SSH keys"
+      action 3.2  cli command "configure terminal"
+      action 3.3  cli command "crypto key generate rsa modulus 2048 label $_info_routername"
+      action 3.4  cli command "end"
+      action 3.5  syslog msg  "End generating SSH keys"
+      action 3.6 end
+      !
+      !
+      line con 0
+      exec-timeout 0 0
+      password cisco
+      stopbits 1
+      line vty 0 4
+      exec-timeout 720 0
+      password cisco
+      login local
+      transport input telnet ssh
+      !
+      !
+      end
+    image_definition: csr1000v-170302
+    tags: []
+    interfaces:
+      - id: i0
+        label: Loopback0
+        type: loopback
+      - id: i1
+        slot: 0
+        label: GigabitEthernet1
+        type: physical
+      - id: i2
+        slot: 1
+        label: GigabitEthernet2
+        type: physical
+      - id: i3
+        slot: 2
+        label: GigabitEthernet3
+        type: physical
+      - id: i4
+        slot: 3
+        label: GigabitEthernet4
+        type: physical
+      - id: i5
+        slot: 4
+        label: GigabitEthernet5
+        type: physical
+  - id: n3
+    label: spine2-20.12
+    node_definition: csr1000v
+    x: -600
+    y: 50
+    configuration: |-
+      hostname spine2
+      !
+      interface GigabitEthernet1
+      description to sandbox-backend
+      ip address 10.10.20.12 255.255.255.0
+      negotiation auto
+      no mop enabled
+      no mop sysid
+      no shutdown
+      !
+      !
+      !
+      enable password cisco
+      no ip domain lookup
+      ip domain name virl.info
+      username cisco privilege 15 secret cisco
+      !
+      ip route 0.0.0.0 0.0.0.0 10.10.20.254
+      !
+      !
+      ! https://community.cisco.com/t5/network-management/create-rsa-keys-if-they-do-not-exist/td-p/2614667
+      event manager applet EEM_SSH_Keygen
+      event timer cron cron-entry "@reboot"
+      action 0.0 info type routername
+      action 0.1 set status "none"
+      action 0.2 syslog msg  "Reviewing SSH keys"
+      action 1.0 cli command "enable"
+      action 2.0 cli command "show ip ssh | include ^SSH"
+      action 2.1 regexp "([ED][^ ]+)" "$_cli_result" result status
+      action 3.0 if $status eq Disabled
+      action 3.1  syslog msg  "Generating SSH keys"
+      action 3.2  cli command "configure terminal"
+      action 3.3  cli command "crypto key generate rsa modulus 2048 label $_info_routername"
+      action 3.4  cli command "end"
+      action 3.5  syslog msg  "End generating SSH keys"
+      action 3.6 end
+      !
+      !
+      line con 0
+      exec-timeout 0 0
+      password cisco
+      stopbits 1
+      line vty 0 4
+      exec-timeout 720 0
+      password cisco
+      login local
+      transport input telnet ssh
+      !
+      !
+      !
+      end
+    image_definition: csr1000v-170302
+    tags: []
+    interfaces:
+      - id: i0
+        label: Loopback0
+        type: loopback
+      - id: i1
+        slot: 0
+        label: GigabitEthernet1
+        type: physical
+      - id: i2
+        slot: 1
+        label: GigabitEthernet2
+        type: physical
+      - id: i3
+        slot: 2
+        label: GigabitEthernet3
+        type: physical
+      - id: i4
+        slot: 3
+        label: GigabitEthernet4
+        type: physical
+      - id: i5
+        slot: 4
+        label: GigabitEthernet5
+        type: physical
+  - id: n4
+    label: leaf1-20.21
+    node_definition: csr1000v
+    x: -950
+    y: -150
+    configuration: |-
+      hostname leaf1
+      !
+      interface GigabitEthernet1
+      description to sandbox-backend
+      vrf forwarding Mgmt-intf
+      ip address 10.10.20.21 255.255.255.0
+      negotiation auto
+      no mop enabled
+      no mop sysid
+      no shutdown
+      !
+      !
+      !
+      enable password cisco
+      no ip domain lookup
+      ip domain name virl.info
+      username cisco privilege 15 secret cisco
+      !
+      ip route 0.0.0.0 0.0.0.0 10.10.20.254
+      !
+      !
+      ! https://community.cisco.com/t5/network-management/create-rsa-keys-if-they-do-not-exist/td-p/2614667
+      event manager applet EEM_SSH_Keygen
+      event timer cron cron-entry "@reboot"
+      action 0.0 info type routername
+      action 0.1 set status "none"
+      action 0.2 syslog msg  "Reviewing SSH keys"
+      action 1.0 cli command "enable"
+      action 2.0 cli command "show ip ssh | include ^SSH"
+      action 2.1 regexp "([ED][^ ]+)" "$_cli_result" result status
+      action 3.0 if $status eq Disabled
+      action 3.1  syslog msg  "Generating SSH keys"
+      action 3.2  cli command "configure terminal"
+      action 3.3  cli command "crypto key generate rsa modulus 2048 label $_info_routername"
+      action 3.4  cli command "end"
+      action 3.5  syslog msg  "End generating SSH keys"
+      action 3.6 end
+      !
+      !
+      line con 0
+      exec-timeout 0 0
+      password cisco
+      stopbits 1
+      line vty 0 4
+      exec-timeout 720 0
+      password cisco
+      login local
+      transport input telnet ssh
+      !
+      !
+      end
+    image_definition: csr1000v-170302
+    tags: []
+    interfaces:
+      - id: i0
+        label: Loopback0
+        type: loopback
+      - id: i1
+        slot: 0
+        label: GigabitEthernet1
+        type: physical
+      - id: i2
+        slot: 1
+        label: GigabitEthernet2
+        type: physical
+      - id: i3
+        slot: 2
+        label: GigabitEthernet3
+        type: physical
+      - id: i4
+        slot: 3
+        label: GigabitEthernet4
+        type: physical
+  - id: n5
+    label: leaf2-20.22
+    node_definition: csr1000v
+    x: -950
+    y: 0
+    configuration: |-
+      hostname leaf2
+      !
+      interface GigabitEthernet1
+      description to sandbox-backend
+      ip address 10.10.20.22 255.255.255.0
+      negotiation auto
+      no mop enabled
+      no mop sysid
+      no shutdown
+      !
+      !
+      !
+      enable password cisco
+      no ip domain lookup
+      ip domain name virl.info
+      username cisco privilege 15 secret cisco
+      !
+      ip route 0.0.0.0 0.0.0.0 10.10.20.254
+      !
+      !
+      ! https://community.cisco.com/t5/network-management/create-rsa-keys-if-they-do-not-exist/td-p/2614667
+      event manager applet EEM_SSH_Keygen
+      event timer cron cron-entry "@reboot"
+      action 0.0 info type routername
+      action 0.1 set status "none"
+      action 0.2 syslog msg  "Reviewing SSH keys"
+      action 1.0 cli command "enable"
+      action 2.0 cli command "show ip ssh | include ^SSH"
+      action 2.1 regexp "([ED][^ ]+)" "$_cli_result" result status
+      action 3.0 if $status eq Disabled
+      action 3.1  syslog msg  "Generating SSH keys"
+      action 3.2  cli command "configure terminal"
+      action 3.3  cli command "crypto key generate rsa modulus 2048 label $_info_routername"
+      action 3.4  cli command "end"
+      action 3.5  syslog msg  "End generating SSH keys"
+      action 3.6 end
+      !
+      !
+      line con 0
+      exec-timeout 0 0
+      password cisco
+      stopbits 1
+      line vty 0 4
+      exec-timeout 720 0
+      password cisco
+      login local
+      transport input telnet ssh
+      !
+      !
+      end
+    image_definition: csr1000v-170302
+    tags: []
+    interfaces:
+      - id: i0
+        label: Loopback0
+        type: loopback
+      - id: i1
+        slot: 0
+        label: GigabitEthernet1
+        type: physical
+      - id: i2
+        slot: 1
+        label: GigabitEthernet2
+        type: physical
+      - id: i3
+        slot: 2
+        label: GigabitEthernet3
+        type: physical
+      - id: i4
+        slot: 3
+        label: GigabitEthernet4
+        type: physical
+  - id: n6
+    label: leaf3-20.23
+    node_definition: csr1000v
+    x: -950
+    y: 150
+    configuration: |-
+      hostname leaf3
+      !
+      interface GigabitEthernet1
+      description to sandbox-backend
+      ip address 10.10.20.23 255.255.255.0
+      negotiation auto
+      no mop enabled
+      no mop sysid
+      no shutdown
+      !
+      !
+      !
+      enable password cisco
+      no ip domain lookup
+      ip domain name virl.info
+      username cisco privilege 15 secret cisco
+      !
+      ip route 0.0.0.0 0.0.0.0 10.10.20.254
+      !
+      !
+      ! https://community.cisco.com/t5/network-management/create-rsa-keys-if-they-do-not-exist/td-p/2614667
+      event manager applet EEM_SSH_Keygen
+      event timer cron cron-entry "@reboot"
+      action 0.0 info type routername
+      action 0.1 set status "none"
+      action 0.2 syslog msg  "Reviewing SSH keys"
+      action 1.0 cli command "enable"
+      action 2.0 cli command "show ip ssh | include ^SSH"
+      action 2.1 regexp "([ED][^ ]+)" "$_cli_result" result status
+      action 3.0 if $status eq Disabled
+      action 3.1  syslog msg  "Generating SSH keys"
+      action 3.2  cli command "configure terminal"
+      action 3.3  cli command "crypto key generate rsa modulus 2048 label $_info_routername"
+      action 3.4  cli command "end"
+      action 3.5  syslog msg  "End generating SSH keys"
+      action 3.6 end
+      !
+      !
+      line con 0
+      exec-timeout 0 0
+      password cisco
+      stopbits 1
+      line vty 0 4
+      exec-timeout 720 0
+      password cisco
+      login local
+      transport input telnet ssh
+      !
+      !
+      end
+    image_definition: csr1000v-170302
+    tags: []
+    interfaces:
+      - id: i0
+        label: Loopback0
+        type: loopback
+      - id: i1
+        slot: 0
+        label: GigabitEthernet1
+        type: physical
+      - id: i2
+        slot: 1
+        label: GigabitEthernet2
+        type: physical
+      - id: i3
+        slot: 2
+        label: GigabitEthernet3
+        type: physical
+      - id: i4
+        slot: 3
+        label: GigabitEthernet4
+        type: physical
+  - id: n7
+    label: host1-20.31
+    node_definition: desktop
+    x: -1150
+    y: -150
+    configuration: |-
+      hostname host1
+      echo "127.0.0.1   host1" >>/etc/hosts
+      echo "::1         host1" >> /etc/hosts
+      ifconfig eth0 up 10.10.20.31 netmask 255.255.255.0
+      route add -net 0.0.0.0/0 gw 10.10.20.254 dev eth0
+    image_definition: desktop-3-13-2-xfce
+    tags: []
+    interfaces:
+      - id: i0
+        slot: 0
+        label: eth0
+        type: physical
+      - id: i1
+        slot: 1
+        label: eth1
+        type: physical
+  - id: n8
+    label: host2-20.32
+    node_definition: desktop
+    x: -1150
+    y: 0
+    configuration: |-
+      hostname host2
+      echo "127.0.0.1   host2" >>/etc/hosts
+      echo "::1         host2" >> /etc/hosts
+      ifconfig eth0 up 10.10.20.32 netmask 255.255.255.0
+      route add -net 0.0.0.0/0 gw 10.10.20.254 dev eth0
+    image_definition: desktop-3-13-2-xfce
+    tags: []
+    interfaces:
+      - id: i0
+        slot: 0
+        label: eth0
+        type: physical
+      - id: i1
+        slot: 1
+        label: eth1
+        type: physical
+  - id: n9
+    label: host3-20.33
+    node_definition: desktop
+    x: -1150
+    y: 150
+    configuration: |-
+      hostname host3
+      echo "127.0.0.1   host3" >>/etc/hosts
+      echo "::1         host3" >> /etc/hosts
+      ifconfig eth0 up 10.10.20.33 netmask 255.255.255.0
+      route add -net 0.0.0.0/0 gw 10.10.20.254 dev eth0
+    image_definition: desktop-3-13-2-xfce
+    tags: []
+    interfaces:
+      - id: i0
+        slot: 0
+        label: eth0
+        type: physical
+      - id: i1
+        slot: 1
+        label: eth1
+        type: physical
+links:
+  - id: l0
+    i1: i0
+    n1: n1
+    i2: i0
+    n2: n0
+  - id: l1
+    i1: i1
+    n1: n2
+    i2: i1
+    n2: n1
+  - id: l2
+    i1: i1
+    n1: n3
+    i2: i2
+    n2: n1
+  - id: l3
+    i1: i1
+    n1: n4
+    i2: i3
+    n2: n1
+  - id: l4
+    i1: i1
+    n1: n5
+    i2: i4
+    n2: n1
+  - id: l5
+    i1: i1
+    n1: n6
+    i2: i5
+    n2: n1
+  - id: l6
+    i1: i0
+    n1: n7
+    i2: i6
+    n2: n1
+  - id: l7
+    i1: i0
+    n1: n8
+    i2: i7
+    n2: n1
+  - id: l8
+    i1: i0
+    n1: n9
+    i2: i8
+    n2: n1
+  - id: l13
+    i1: i2
+    n1: n4
+    i2: i3
+    n2: n2
+  - id: l14
+    i1: i3
+    n1: n4
+    i2: i3
+    n2: n3
+  - id: l15
+    i1: i2
+    n1: n5
+    i2: i4
+    n2: n2
+  - id: l16
+    i1: i3
+    n1: n5
+    i2: i4
+    n2: n3
+  - id: l17
+    i1: i2
+    n1: n6
+    i2: i5
+    n2: n2
+  - id: l18
+    i1: i3
+    n1: n6
+    i2: i5
+    n2: n3
+  - id: l19
+    i1: i1
+    n1: n7
+    i2: i4
+    n2: n4
+  - id: l20
+    i1: i1
+    n1: n8
+    i2: i4
+    n2: n5
+  - id: l21
+    i1: i1
+    n1: n9
+    i2: i4
+    n2: n6

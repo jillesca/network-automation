@@ -1,0 +1,1 @@
+cml_lab_file: "{{ lookup('env', 'PWD') }}/files/topologies/base-setup/init_lab.yaml.j2"

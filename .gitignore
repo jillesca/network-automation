@@ -1,0 +1,8 @@
+*.env
+
+# File used for debugging
+lab_facts.json
+
+ansible/.ssh/cml
+ansible/.ssh/cml.pub
+ansible/.ssh/authorized_keys

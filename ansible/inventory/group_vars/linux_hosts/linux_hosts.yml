@@ -1,0 +1,1 @@
+cml_config_file: "{{ lookup('env', 'PWD') }}/templates/linux_hosts/bootstrap.j2"

@@ -1,0 +1,59 @@
+hostname {{ inventory_hostname }}
+vrf definition Mgmt-intf
+!
+address-family ipv4
+exit-address-family
+!
+address-family ipv6
+exit-address-family
+!
+enable password {{ ansible_password }} 
+no ip domain lookup
+ip domain name virl.info
+username {{ ansible_user }} privilege 15 secret 0 {{ ansible_password }}
+!
+interface {{ mgmt_interface }}
+description to sandbox-backend
+vrf forwarding Mgmt-intf
+ip address {{ ansible_host }} 255.255.255.0
+negotiation auto
+no shutdown
+!
+ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 {{ network_gateway }}
+!
+ip http server
+ip http secure-server
+ip http max-connections 2
+!
+ip ssh time-out 60
+ip ssh version 2
+ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+!
+crypto key generate rsa modulus 2048 label RSA_SSH
+!
+!
+! The EEM script helps with ARP on the CML bridge and Bastion/jump host VM
+! So ansible can easily reach the devices. 
+!
+event manager applet ping_gateway
+event timer cron cron-entry "@reboot"
+action 0.1 syslog msg "Beginning to Ping Gateway and Bastion"
+action 1.0 cli command "enable"
+action 1.1 cli command "ping vrf Mgmt-intf {{ network_gateway }}"
+action 1.2 syslog msg "Beginning to Ping Gateway"
+action 1.3 cli command "ping vrf Mgmt-intf {{ network_bastion }}"
+action 1.4 syslog msg "End Pinging Gateway and Bastion"
+!
+line con 0
+exec-timeout 0 0
+password {{ ansible_password }}
+stopbits 1
+logging synchronous
+privilege level 15
+line vty 0 4
+exec-timeout 720 0
+password {{ ansible_password }}
+login local
+transport input telnet ssh
+!
