@@ -34,7 +34,7 @@ CML or [Cisco Modelling Labs](https://developer.cisco.com/docs/sandbox/#!network
 
 ```
 docker-compose -f ./docker/cml.docker-compose.yml up -d
-
+docker exec -it cml /bin/sh
 ansible-playbook cisco.cml.build -e startup='host'
 ```
 
