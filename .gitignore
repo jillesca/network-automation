@@ -1,4 +1,4 @@
-*.env
+# *.env
 
 # File used for debugging
 lab_facts.json
